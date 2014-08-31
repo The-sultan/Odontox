@@ -1,0 +1,6 @@
+List<PartnerNetworkRecordConnection> conn = [
+	SELECT id 
+	FROM PartnerNetworkRecordConnection 
+	WHERE status = 'Sent'];
+
+delete(conn);

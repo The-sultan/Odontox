@@ -1,0 +1,17 @@
+/**
+* SYNC Tratamientos
+*
+**/
+
+
+List<Opportunity> tratamientos = [SELECT id, accountId FROM Opportunity];
+odontox__Configuration__c config = [select odontox__Outbound_conn_id__c from odontox__Configuration__c];
+List<PartnerNetworkRecordConnection> tratamientosFE = new List<PartnerNetworkRecordConnection>();
+for(Opportunity t : tratamientos){
+        PartnerNetworkRecordConnection newrecord = new PartnerNetworkRecordConnection();
+        newrecord.ConnectionId = config.odontox__Outbound_conn_id__c;
+        newrecord.LocalRecordId = t.id;  
+        newrecord.ParentRecordId = t.AccountId;  
+        tratamientosFE.add(newrecord);  
+}
+insert tratamientosFE;

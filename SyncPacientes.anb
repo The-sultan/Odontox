@@ -1,0 +1,17 @@
+/**
+* SYNC Pacientes
+*
+**/
+
+
+
+List<Account> pacientes = [SELECT id FROM Account];
+odontox__Configuration__c config = [select odontox__Outbound_conn_id__c from odontox__Configuration__c];
+List<PartnerNetworkRecordConnection> pacientesFE = new List<PartnerNetworkRecordConnection>();
+for(Account paciente : pacientes){
+	 PartnerNetworkRecordConnection newr = new PartnerNetworkRecordConnection();
+     newr.ConnectionId = config.odontox__Outbound_conn_id__c;
+     newr.LocalRecordId = paciente.id;  
+     pacientesFE.add(newr);
+}
+insert pacientesFE;

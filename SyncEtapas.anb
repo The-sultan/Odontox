@@ -1,0 +1,20 @@
+/**
+* SYNC Etapas
+*
+**/
+
+
+List<odontox__etapa__c> etapas = [
+SELECT Id, odontox__tratamiento__c
+FROM odontox__Etapa__c
+];
+odontox__Configuration__c config = [select odontox__Outbound_conn_id__c from odontox__Configuration__c];
+List<PartnerNetworkRecordConnection> etapasFE = new List<PartnerNetworkRecordConnection>();
+for(odontox__etapa__c etapa : etapas){
+        PartnerNetworkRecordConnection newrecord = new PartnerNetworkRecordConnection();
+        newrecord.ConnectionId = config.odontox__Outbound_conn_id__c;
+        newrecord.LocalRecordId = etapa.id;  
+        newrecord.ParentRecordId = etapa.odontox__tratamiento__c;  
+        etapasFE.add(newrecord);  
+}
+insert etapasFE;

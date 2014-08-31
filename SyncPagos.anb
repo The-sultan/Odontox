@@ -1,0 +1,20 @@
+/**
+* SYNC Pagos
+*
+**/
+
+
+List<odontox__pago__c> pagos = [
+SELECT o.Id, o.odontox__tratamiento__c
+FROM odontox__Pago__c o 
+];
+odontox__Configuration__c config = [select odontox__Outbound_conn_id__c from odontox__Configuration__c];
+List<PartnerNetworkRecordConnection> pagosFE = new List<PartnerNetworkRecordConnection>();
+for(odontox__pago__c pago : pagos){
+        PartnerNetworkRecordConnection newrecord = new PartnerNetworkRecordConnection();
+        newrecord.ConnectionId = config.odontox__Outbound_conn_id__c;
+        newrecord.LocalRecordId = pago.id;  
+        newrecord.ParentRecordId = pago.odontox__tratamiento__c;  
+        pagosFE.add(newrecord);  
+}
+insert pagosFE;

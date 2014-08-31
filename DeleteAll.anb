@@ -1,0 +1,16 @@
+/**
+*	DELETE ALL!!!!
+*
+**/
+
+String orgId = UserInfo.getOrganizationId();
+System.debug(orgId);
+if(orgId != '00DA0000000AT2LMAW' && orgId != '00DA0000000HP0lMAG'){
+	throw new MyException('This script is not supposed to run on this org!!!');
+}
+List<Account> acs = [SELECT id FROM Account];
+List<Opportunity> ops = [SELECT id FROM Opportunity];
+delete(ops);
+delete(acs);
+class MyException extends Exception{}
+
